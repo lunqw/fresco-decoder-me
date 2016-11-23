@@ -103,18 +103,11 @@ public class MEImageDecoder extends ImageDecoder {
         if (encodedImage.getImageFormat() == ImageFormat.UNKNOWN) {
             try {
                 final long begin = System.currentTimeMillis();
-                AnimatedImage image = decodeImage(encodedImage);
+                CloseableImage closeableImage = decodeImage(encodedImage);
                 final long end = System.currentTimeMillis();
                 FLog.d(TAG, "Image decoded, bein: %d, end: %d, diff: %d",
                         begin, end, end - begin);
-
-                if (image != null) {
-                    final AnimatedImageResult result = AnimatedImageResult.newBuilder(image)
-                            .build();
-                    return new CloseableAnimatedImage(result);
-                } else {
-                    FLog.e(TAG, "Decode error: file was invalid ?");
-                }
+                return closeableImage;
             } catch (Exception e) {
                 FLog.e(TAG, e, "Decode image error");
             }
@@ -122,7 +115,7 @@ public class MEImageDecoder extends ImageDecoder {
         return super.decodeImage(encodedImage, length, qualityInfo, options);
     }
 
-    private AnimatedImage decodeImage(EncodedImage encodedImage) throws IOException {
+    private CloseableImage decodeImage(EncodedImage encodedImage) throws IOException {
         ZipEntry ze;
         ZipInputStream zin = new ZipInputStream(encodedImage.getInputStream());
         while ((ze = zin.getNextEntry()) != null) {
@@ -147,7 +140,9 @@ public class MEImageDecoder extends ImageDecoder {
 
                     if (image != null) {
                         zin.close();
-                        return image;
+                        final AnimatedImageResult result = AnimatedImageResult.newBuilder(image)
+                                .build();
+                        return new CloseableAnimatedImage(result);
                     }
                 }
             }
