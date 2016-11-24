@@ -1,6 +1,4 @@
-package com.yy.lqw.fresco.rf;
-
-import com.yy.lqw.fresco.base.AbstractDescriptor;
+package com.yy.lqw.fresco;
 
 import java.util.List;
 
@@ -8,7 +6,7 @@ import java.util.List;
  * Created by lunqingwen on 2016/11/10.
  */
 
-public class RFDescriptor extends AbstractDescriptor {
+class RFDescriptor extends AbstractDescriptor {
     // width
     public int width;
 

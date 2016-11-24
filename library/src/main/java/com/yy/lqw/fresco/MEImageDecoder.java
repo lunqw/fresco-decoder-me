@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.decoder;
+package com.yy.lqw.fresco;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,13 +17,6 @@ import com.facebook.imagepipeline.image.EncodedImage;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.platform.PlatformDecoder;
 import com.google.gson.Gson;
-import com.yy.lqw.fresco.base.AbstractAnimatedImage;
-import com.yy.lqw.fresco.base.AbstractDescriptor;
-import com.yy.lqw.fresco.cache.AnimatedMemoryCache;
-import com.yy.lqw.fresco.rf.RFDescriptor;
-import com.yy.lqw.fresco.rf.RFImage;
-import com.yy.lqw.fresco.svga.SVGADescriptor;
-import com.yy.lqw.fresco.svga.SVGAImage;
 
 import org.nustaq.serialization.FSTConfiguration;
 
@@ -48,7 +41,7 @@ import java.util.zip.ZipInputStream;
  * <li>RF(Reusable frames)</li>
  * </ol>
  */
-public class MEImageDecoder extends ImageDecoder {
+class MEImageDecoder extends ImageDecoder {
     private static final Class<?> TAG = MEImageDecoder.class;
 
     // only support png image
@@ -123,7 +116,7 @@ public class MEImageDecoder extends ImageDecoder {
                 if (ze.getName().equals(config.mDFName)) {
                     final String cacheKey = getCacheKey(ze.getSize(),
                             ze.getTime(), ze.getCrc());
-                    AbstractAnimatedImage image = AnimatedMemoryCache.get(cacheKey);
+                    AbstractAnimatedImage image = AnimatedCache.get(cacheKey);
                     if (image == null) {
                         final File imageDir = getImageDirectory(cacheKey);
                         if (!imageDir.exists()) {
@@ -134,7 +127,7 @@ public class MEImageDecoder extends ImageDecoder {
                             final File dFile = new File(imageDir, config.mDFName);
                             image = decodeImage(imageDir, dFile, config.mDClass,
                                     config.mIClass);
-                            AnimatedMemoryCache.put(cacheKey, image);
+                            AnimatedCache.put(cacheKey, image);
                         }
                     }
 

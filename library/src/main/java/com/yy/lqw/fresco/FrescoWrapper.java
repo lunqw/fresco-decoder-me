@@ -3,13 +3,11 @@ package com.yy.lqw.fresco;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.animated.factory.AnimatedImageFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.core.ImagePipelineFactory;
 import com.facebook.imagepipeline.platform.PlatformDecoder;
-import com.yy.lqw.fresco.decoder.MEImageDecoder;
 
 /**
  * Created by lunqingwen on 2016/10/14.

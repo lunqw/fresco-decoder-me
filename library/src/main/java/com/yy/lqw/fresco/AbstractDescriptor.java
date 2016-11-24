@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.base;
+package com.yy.lqw.fresco;
 
 import android.graphics.Bitmap;
 
@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by lunqingwen on 2016/11/10.
  */
 
-public abstract class AbstractDescriptor implements Serializable {
+abstract class AbstractDescriptor implements Serializable {
     // preview
     public String preview;
 

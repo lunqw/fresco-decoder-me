@@ -1,17 +1,16 @@
-package com.yy.lqw.fresco.rf;
+package com.yy.lqw.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
-import com.yy.lqw.fresco.decoder.MEImageDecoder;
 
 /**
  * Created by lunqingwen on 2016/11/10.
  */
 
-public class RFFrame implements AnimatedImageFrame {
+class RFFrame implements AnimatedImageFrame {
     private static final Class<?> TAG = MEImageDecoder.class;
     private final int mFrameNumber;
     private final RFDescriptor mDescriptor;

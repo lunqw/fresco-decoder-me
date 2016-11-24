@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.svga;
+package com.yy.lqw.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 /**
  * Created by lunqingwen on 2016/8/31.
  */
-public class SVGAFrame implements AnimatedImageFrame {
+class SVGAFrame implements AnimatedImageFrame {
     private final SVGADescriptor mDescriptor;
     private final int mFrameNumber;
     private final Canvas mCanvas = new Canvas();

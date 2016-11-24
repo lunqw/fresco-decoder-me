@@ -1,27 +1,17 @@
-package com.yy.lqw.fresco.rf;
+package com.yy.lqw.fresco;
 
 import android.graphics.Bitmap;
 
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
-import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
-import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 
 import java.util.Arrays;
 
 /**
- * Created by lunqingwen on 2016/11/10.
+ * Created by lunqingwen on 2016/8/31.
  */
-
-public class RFImage extends AbstractAnimatedImage {
-    public RFImage(RFDescriptor descriptor) {
+class SVGAImage extends AbstractAnimatedImage {
+    public SVGAImage(SVGADescriptor descriptor) {
         super(descriptor);
-        if (descriptor.width == 0 || descriptor.height == 0) {
-            for (Bitmap bitmap : descriptor.cache.values()) {
-                descriptor.width = bitmap.getWidth();
-                descriptor.height = bitmap.getHeight();
-                break;
-            }
-        }
     }
 
     @Override
@@ -31,29 +21,30 @@ public class RFImage extends AbstractAnimatedImage {
 
     @Override
     public int getWidth() {
-        return ((RFDescriptor) mDescriptor).width;
+        return ((SVGADescriptor) mDescriptor).movie.viewBox.width;
     }
 
     @Override
     public int getHeight() {
-        return ((RFDescriptor) mDescriptor).height;
+        return ((SVGADescriptor) mDescriptor).movie.viewBox.height;
     }
 
     @Override
     public int getFrameCount() {
-        return ((RFDescriptor) mDescriptor).frames.size();
+        return ((SVGADescriptor) mDescriptor).movie.frames;
     }
 
     @Override
     public int getDuration() {
-        final float duration = 1000.0f / ((RFDescriptor) mDescriptor).fps * getFrameCount();
-        return (int) duration;
+        final int frames = ((SVGADescriptor) mDescriptor).movie.frames;
+        final int fps = ((SVGADescriptor) mDescriptor).movie.fps;
+        return (int) (1000.0f / fps * frames);
     }
 
     @Override
     public int[] getFrameDurations() {
-        int[] durations = new int[getFrameCount()];
-        Arrays.fill(durations, 1000 / ((RFDescriptor) mDescriptor).fps);
+        int[] durations = new int[((SVGADescriptor) mDescriptor).movie.frames];
+        Arrays.fill(durations, 1000 / ((SVGADescriptor) mDescriptor).movie.fps);
         return durations;
     }
 
@@ -63,8 +54,8 @@ public class RFImage extends AbstractAnimatedImage {
     }
 
     @Override
-    public AnimatedImageFrame getFrame(int frameNumber) {
-        return new RFFrame(frameNumber, ((RFDescriptor) mDescriptor));
+    public SVGAFrame getFrame(int frameNumber) {
+        return new SVGAFrame(frameNumber, ((SVGADescriptor) mDescriptor));
     }
 
     @Override
@@ -84,7 +75,7 @@ public class RFImage extends AbstractAnimatedImage {
 
     @Override
     public AnimatedDrawableFrameInfo getFrameInfo(int frameNumber) {
-        final AnimatedImageFrame frame = getFrame(frameNumber);
+        SVGAFrame frame = getFrame(frameNumber);
         return new AnimatedDrawableFrameInfo(
                 frameNumber,
                 frame.getXOffset(),
@@ -93,14 +84,5 @@ public class RFImage extends AbstractAnimatedImage {
                 frame.getHeight(),
                 AnimatedDrawableFrameInfo.BlendOperation.NO_BLEND,
                 AnimatedDrawableFrameInfo.DisposalMethod.DISPOSE_DO_NOT);
-    }
-
-    @Override
-    public int getPreviewFrame() {
-        final String preview = mDescriptor.preview;
-        if (preview != null) {
-            return ((RFDescriptor) mDescriptor).frames.indexOf(preview);
-        }
-        return 0;
     }
 }

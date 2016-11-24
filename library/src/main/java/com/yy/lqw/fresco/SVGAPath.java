@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.svga;
+package com.yy.lqw.fresco;
 
 import android.graphics.Path;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by lunqingwen on 2016/9/2.
  */
-public class SVGAPath {
+class SVGAPath {
     private static final List<Character> VALID_METHODS = Collections.unmodifiableList(
             Arrays.asList(
                     'M', 'L', 'H', 'V', 'C', 'S', 'Q', 'R', 'A',
