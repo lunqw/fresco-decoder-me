@@ -1,21 +1,18 @@
 package com.yy.lqw.fresco.svga;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
-import com.facebook.imagepipeline.animated.base.AnimatedImage;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 
 import java.util.Arrays;
 
 /**
  * Created by lunqingwen on 2016/8/31.
  */
-public class SVGAImage implements AnimatedImage {
-    private final SVGADescriptor mDescriptor;
-
-    public SVGAImage(@NonNull SVGADescriptor descriptor) {
-        mDescriptor = descriptor;
+public class SVGAImage extends AbstractAnimatedImage {
+    public SVGAImage(SVGADescriptor descriptor) {
+        super(descriptor);
     }
 
     @Override
@@ -25,30 +22,30 @@ public class SVGAImage implements AnimatedImage {
 
     @Override
     public int getWidth() {
-        return mDescriptor.movie.viewBox.width;
+        return ((SVGADescriptor) mDescriptor).movie.viewBox.width;
     }
 
     @Override
     public int getHeight() {
-        return mDescriptor.movie.viewBox.height;
+        return ((SVGADescriptor) mDescriptor).movie.viewBox.height;
     }
 
     @Override
     public int getFrameCount() {
-        return mDescriptor.movie.frames;
+        return ((SVGADescriptor) mDescriptor).movie.frames;
     }
 
     @Override
     public int getDuration() {
-        final int frames = mDescriptor.movie.frames;
-        final int fps = mDescriptor.movie.fps;
+        final int frames = ((SVGADescriptor) mDescriptor).movie.frames;
+        final int fps = ((SVGADescriptor) mDescriptor).movie.fps;
         return (int) (1000.0f / fps * frames);
     }
 
     @Override
     public int[] getFrameDurations() {
-        int[] durations = new int[mDescriptor.movie.frames];
-        Arrays.fill(durations, 1000 / mDescriptor.movie.fps);
+        int[] durations = new int[((SVGADescriptor) mDescriptor).movie.frames];
+        Arrays.fill(durations, 1000 / ((SVGADescriptor) mDescriptor).movie.fps);
         return durations;
     }
 
@@ -59,7 +56,7 @@ public class SVGAImage implements AnimatedImage {
 
     @Override
     public SVGAFrame getFrame(int frameNumber) {
-        return new SVGAFrame(frameNumber, mDescriptor);
+        return new SVGAFrame(frameNumber, ((SVGADescriptor) mDescriptor));
     }
 
     @Override

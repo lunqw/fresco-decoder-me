@@ -1,6 +1,7 @@
 package com.yy.lqw.fresco.cache;
 
 import com.facebook.imagepipeline.animated.base.AnimatedImage;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,13 +11,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 public class AnimatedMemoryCache {
-    private static final Map<String, AnimatedImage> sCache = new ConcurrentHashMap<>();
+    private static final Map<String, AbstractAnimatedImage> sCache = new ConcurrentHashMap<>();
 
-    public static AnimatedImage get(String key) {
+    public static AbstractAnimatedImage get(String key) {
         return sCache.get(key);
     }
 
-    public static void put(String key, AnimatedImage image) {
+    public static void put(String key, AbstractAnimatedImage image) {
         sCache.put(key, image);
     }
 }

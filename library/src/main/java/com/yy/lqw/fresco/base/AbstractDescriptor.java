@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.descriptor;
+package com.yy.lqw.fresco.base;
 
 import android.graphics.Bitmap;
 
@@ -11,6 +11,9 @@ import java.util.Map;
  */
 
 public abstract class AbstractDescriptor implements Serializable {
+    // preview
+    public String preview;
+
     // 位图缓存
     public transient Map<String, Bitmap> cache;
 

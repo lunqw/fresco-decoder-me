@@ -1,11 +1,10 @@
 package com.yy.lqw.fresco.rf;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
-import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 
 import java.util.Arrays;
 
@@ -13,11 +12,9 @@ import java.util.Arrays;
  * Created by lunqingwen on 2016/11/10.
  */
 
-public class RFImage implements AnimatedImage {
-    private final RFDescriptor mDescriptor;
-
-    public RFImage(@NonNull RFDescriptor descriptor) {
-        mDescriptor = descriptor;
+public class RFImage extends AbstractAnimatedImage {
+    public RFImage(RFDescriptor descriptor) {
+        super(descriptor);
         if (descriptor.width == 0 || descriptor.height == 0) {
             for (Bitmap bitmap : descriptor.cache.values()) {
                 descriptor.width = bitmap.getWidth();
@@ -34,29 +31,29 @@ public class RFImage implements AnimatedImage {
 
     @Override
     public int getWidth() {
-        return mDescriptor.width;
+        return ((RFDescriptor) mDescriptor).width;
     }
 
     @Override
     public int getHeight() {
-        return mDescriptor.height;
+        return ((RFDescriptor) mDescriptor).height;
     }
 
     @Override
     public int getFrameCount() {
-        return mDescriptor.frames.size();
+        return ((RFDescriptor) mDescriptor).frames.size();
     }
 
     @Override
     public int getDuration() {
-        final float duration = 1000.0f / mDescriptor.fps * getFrameCount();
+        final float duration = 1000.0f / ((RFDescriptor) mDescriptor).fps * getFrameCount();
         return (int) duration;
     }
 
     @Override
     public int[] getFrameDurations() {
         int[] durations = new int[getFrameCount()];
-        Arrays.fill(durations, 1000 / mDescriptor.fps);
+        Arrays.fill(durations, 1000 / ((RFDescriptor) mDescriptor).fps);
         return durations;
     }
 
@@ -67,7 +64,7 @@ public class RFImage implements AnimatedImage {
 
     @Override
     public AnimatedImageFrame getFrame(int frameNumber) {
-        return new RFFrame(frameNumber, mDescriptor);
+        return new RFFrame(frameNumber, ((RFDescriptor) mDescriptor));
     }
 
     @Override
@@ -96,5 +93,14 @@ public class RFImage implements AnimatedImage {
                 frame.getHeight(),
                 AnimatedDrawableFrameInfo.BlendOperation.NO_BLEND,
                 AnimatedDrawableFrameInfo.DisposalMethod.DISPOSE_DO_NOT);
+    }
+
+    @Override
+    public int getPreviewFrame() {
+        final String preview = mDescriptor.preview;
+        if (preview != null) {
+            return ((RFDescriptor) mDescriptor).frames.indexOf(preview);
+        }
+        return 0;
     }
 }

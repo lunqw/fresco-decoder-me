@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
 import com.yy.lqw.fresco.decoder.MEImageDecoder;
 

@@ -3,7 +3,7 @@ package com.yy.lqw.fresco.svga;
 import android.graphics.Matrix;
 import android.graphics.Path;
 
-import com.yy.lqw.fresco.descriptor.AbstractDescriptor;
+import com.yy.lqw.fresco.base.AbstractDescriptor;
 
 import java.io.Serializable;
 import java.util.List;

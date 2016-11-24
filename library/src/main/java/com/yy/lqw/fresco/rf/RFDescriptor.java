@@ -1,6 +1,6 @@
 package com.yy.lqw.fresco.rf;
 
-import com.yy.lqw.fresco.descriptor.AbstractDescriptor;
+import com.yy.lqw.fresco.base.AbstractDescriptor;
 
 import java.util.List;
 

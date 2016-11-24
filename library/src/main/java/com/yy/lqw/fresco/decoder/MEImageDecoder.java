@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.imageformat.ImageFormat;
-import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
 import com.facebook.imagepipeline.animated.factory.AnimatedImageFactory;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
@@ -18,8 +17,9 @@ import com.facebook.imagepipeline.image.EncodedImage;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.facebook.imagepipeline.platform.PlatformDecoder;
 import com.google.gson.Gson;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
+import com.yy.lqw.fresco.base.AbstractDescriptor;
 import com.yy.lqw.fresco.cache.AnimatedMemoryCache;
-import com.yy.lqw.fresco.descriptor.AbstractDescriptor;
 import com.yy.lqw.fresco.rf.RFDescriptor;
 import com.yy.lqw.fresco.rf.RFImage;
 import com.yy.lqw.fresco.svga.SVGADescriptor;
@@ -123,7 +123,7 @@ public class MEImageDecoder extends ImageDecoder {
                 if (ze.getName().equals(config.mDFName)) {
                     final String cacheKey = getCacheKey(ze.getSize(),
                             ze.getTime(), ze.getCrc());
-                    AnimatedImage image = AnimatedMemoryCache.get(cacheKey);
+                    AbstractAnimatedImage image = AnimatedMemoryCache.get(cacheKey);
                     if (image == null) {
                         final File imageDir = getImageDirectory(cacheKey);
                         if (!imageDir.exists()) {
@@ -141,6 +141,7 @@ public class MEImageDecoder extends ImageDecoder {
                     if (image != null) {
                         zin.close();
                         final AnimatedImageResult result = AnimatedImageResult.newBuilder(image)
+                                .setFrameForPreview(image.getPreviewFrame())
                                 .build();
                         return new CloseableAnimatedImage(result);
                     }
@@ -163,7 +164,7 @@ public class MEImageDecoder extends ImageDecoder {
      * @return animated image
      * @throws IOException
      */
-    private <D extends AbstractDescriptor, I extends AnimatedImage> I decodeImage(
+    private <D extends AbstractDescriptor, I extends AbstractAnimatedImage> I decodeImage(
             File imageDir,
             File dFile,
             Class<D> dClass,
