@@ -5,10 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
 }
 
@@ -21,3 +18,25 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    versionCode = 1
+    versionName = '1.0'
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.1'
+    minSdkVersion = 12
+    targetSdkVersion = 25
+    sourceCompatibilityVersion = JavaVersion.VERSION_1_7
+    targetCompatibilityVersion = JavaVersion.VERSION_1_7
+}
+
+ext.deps = [
+        junit               : 'junit:junit:4.12',
+        espressocore        : 'com.android.support.test.espresso:espresso-core:2.2.2',
+        appcompat           : 'com.android.support:appcompat-v7:25.1.0',
+        fresco              : 'com.facebook.fresco:fresco:0.13.0',
+        fresco_animated_webp: 'com.facebook.fresco:animated-webp:0.13.0',
+        fresco_webpsupport  : 'com.facebook.fresco:webpsupport:0.13.0',
+        gson                : 'com.google.code.gson:gson:2.7',
+        fst                 : 'de.ruedigermoeller:fst:2.48'
+]

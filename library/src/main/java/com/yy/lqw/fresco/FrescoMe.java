@@ -12,7 +12,7 @@ import com.facebook.imagepipeline.platform.PlatformDecoder;
 /**
  * Created by lunqingwen on 2016/10/14.
  */
-public class FrescoWrapper {
+public class FrescoMe {
     public static void initialize(Context context) {
         ImagePipelineFactory.initialize(context);
         AnimatedImageFactory factory = ImagePipelineFactory.getInstance()
