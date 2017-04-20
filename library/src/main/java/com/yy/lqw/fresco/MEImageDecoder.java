@@ -3,14 +3,13 @@ package com.yy.lqw.fresco;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
 
 import com.facebook.common.logging.FLog;
 import com.facebook.imageformat.ImageFormat;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
 import com.facebook.imagepipeline.animated.factory.AnimatedImageFactory;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
-import com.facebook.imagepipeline.decoder.ImageDecoder;
+import com.facebook.imagepipeline.decoder.DefaultImageDecoder;
 import com.facebook.imagepipeline.image.CloseableAnimatedImage;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.image.EncodedImage;
@@ -41,7 +40,7 @@ import java.util.zip.ZipInputStream;
  * <li>RF(Reusable frames)</li>
  * </ol>
  */
-class MEImageDecoder extends ImageDecoder {
+class MEImageDecoder extends DefaultImageDecoder {
     private static final Class<?> TAG = MEImageDecoder.class;
 
     // only support png image
@@ -76,7 +75,7 @@ class MEImageDecoder extends ImageDecoder {
             Context context,
             AnimatedImageFactory animatedImageFactory,
             PlatformDecoder platformDecoder,
-            @Nullable Bitmap.Config bitmapConfig) {
+            Bitmap.Config bitmapConfig) {
         super(animatedImageFactory, platformDecoder,
                 bitmapConfig != null ? bitmapConfig : Bitmap.Config.ARGB_8888);
         mDiskCacheRoot = new File(context.getCacheDir(), CACHE_DIR_NAME);
@@ -86,7 +85,7 @@ class MEImageDecoder extends ImageDecoder {
     }
 
     @Override
-    public CloseableImage decodeImage(
+    public CloseableImage decode(
             EncodedImage encodedImage,
             int length,
             QualityInfo qualityInfo,
@@ -105,7 +104,7 @@ class MEImageDecoder extends ImageDecoder {
                 FLog.e(TAG, e, "Decode image error");
             }
         }
-        return super.decodeImage(encodedImage, length, qualityInfo, options);
+        return super.decode(encodedImage, length, qualityInfo, options);
     }
 
     private CloseableImage decodeImage(EncodedImage encodedImage) throws IOException {

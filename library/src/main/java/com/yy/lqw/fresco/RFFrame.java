@@ -2,7 +2,6 @@ package com.yy.lqw.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
 
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
 
@@ -16,7 +15,7 @@ class RFFrame implements AnimatedImageFrame {
     private final RFDescriptor mDescriptor;
     private final Canvas mCanvas = new Canvas();
 
-    public RFFrame(int frameNumber, @NonNull RFDescriptor descriptor) {
+    public RFFrame(int frameNumber, RFDescriptor descriptor) {
         mFrameNumber = frameNumber;
         mDescriptor = descriptor;
     }

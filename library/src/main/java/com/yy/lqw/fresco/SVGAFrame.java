@@ -7,7 +7,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Shader;
-import android.support.annotation.NonNull;
 
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
 
@@ -22,7 +21,7 @@ class SVGAFrame implements AnimatedImageFrame {
     private final Canvas mCanvas = new Canvas();
     private final Paint mPaint = new Paint();
 
-    public SVGAFrame(int frameNumber, @NonNull SVGADescriptor descriptor) {
+    public SVGAFrame(int frameNumber, SVGADescriptor descriptor) {
         mFrameNumber = frameNumber;
         mDescriptor = descriptor;
     }
