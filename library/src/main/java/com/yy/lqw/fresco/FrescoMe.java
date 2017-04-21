@@ -20,8 +20,8 @@ public class FrescoMe {
                 .getAnimatedImageFactory();
         PlatformDecoder platformDecoder = ImagePipelineFactory.getInstance()
                 .getPlatformDecoder();
-        MEImageDecoder decoder = new MEImageDecoder(
-                context, factory, platformDecoder, Bitmap.Config.ARGB_8888);
+        MEImageDecoder decoder = new MEImageDecoder(context, factory,
+                platformDecoder, Bitmap.Config.ARGB_8888);
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
                 .setImageDecoder(decoder)
                 .build();

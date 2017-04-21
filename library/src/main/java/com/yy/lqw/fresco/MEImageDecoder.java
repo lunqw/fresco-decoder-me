@@ -76,8 +76,7 @@ class MEImageDecoder extends DefaultImageDecoder {
             AnimatedImageFactory animatedImageFactory,
             PlatformDecoder platformDecoder,
             Bitmap.Config bitmapConfig) {
-        super(animatedImageFactory, platformDecoder,
-                bitmapConfig != null ? bitmapConfig : Bitmap.Config.ARGB_8888);
+        super(animatedImageFactory, platformDecoder, bitmapConfig);
         mDiskCacheRoot = new File(context.getCacheDir(), CACHE_DIR_NAME);
         if (!mDiskCacheRoot.exists()) {
             mDiskCacheRoot.mkdirs();
