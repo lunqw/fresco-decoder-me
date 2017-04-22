@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 
 import com.facebook.cache.common.CacheKey;
 import com.facebook.common.logging.FLog;
+import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
 import com.facebook.imagepipeline.decoder.ImageDecoder;
@@ -13,8 +14,9 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.image.EncodedImage;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.google.gson.Gson;
-import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 import com.yy.lqw.fresco.base.AbstractDescriptor;
+import com.yy.lqw.fresco.base.Previewable;
+import com.yy.lqw.fresco.format.MEImageFormats;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,16 +50,16 @@ public class MEImageDecoder implements ImageDecoder {
             QualityInfo qualityInfo,
             ImageDecodeOptions options) {
         CloseableImage closeableImage = null;
-        CacheManager.CacheItem cacheItem = null;
+        AbstractDescriptor descriptor = null;
         final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
         if (cacheKey != null) {
-            cacheItem = CacheManager.get(cacheKey);
+            descriptor = CacheManager.get(cacheKey);
         }
         final long beginMillis = System.currentTimeMillis();
         FLog.d(TAG, "Decode image begin");
-        if (cacheItem != null) {
+        if (descriptor != null) {
             FLog.i(TAG, "Decode image from cache, key: %s", cacheKey);
-            closeableImage = createImageFromDescriptor(cacheItem.mFormat, cacheItem.mDescriptor);
+            closeableImage = createImageFromDescriptor(descriptor);
         } else if (encodedImage.getImageFormat() == MEImageFormats.ZIP) {
             FLog.i(TAG, "Decode image from zip file");
             closeableImage = decodeZipBaseImage(encodedImage, length,
@@ -84,7 +86,6 @@ public class MEImageDecoder implements ImageDecoder {
 
         final ZipInputStream zin = new ZipInputStream(encodedImage.getInputStream());
         ZipEntry ze;
-        MEImageFormats.MEImageFormat format = null;
         AbstractDescriptor descriptor = null;
         final Map<String, Bitmap> bitmapCache = new HashMap<>();
         try {
@@ -97,16 +98,16 @@ public class MEImageDecoder implements ImageDecoder {
                     continue;
                 }
 
-                for (int i = 0; i < FORMATS.length; i++) {
-                    if (name.equals(FORMATS[i].getDescriptorFileName())) {
+                for (MEImageFormats.MEImageFormat format : FORMATS) {
+                    if (name.equals(format.getDescriptorFileName())) {
                         final InputStreamReader reader = new InputStreamReader(zin);
-                        format = FORMATS[i];
                         descriptor = decodeDescriptor(reader, format.getDescriptorClass());
                         if (descriptor != null) {
                             descriptor.cache = bitmapCache;
+                            descriptor.format = format;
                             final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
                             if (cacheKey != null) {
-                                CacheManager.put(cacheKey, new CacheManager.CacheItem(format, descriptor));
+                                CacheManager.put(cacheKey, descriptor);
                             }
                         }
                         continue;
@@ -121,8 +122,8 @@ public class MEImageDecoder implements ImageDecoder {
             } catch (IOException e) {
             }
         }
-        if (format != null && descriptor != null) {
-            return createImageFromDescriptor(format, descriptor);
+        if (descriptor != null) {
+            return createImageFromDescriptor(descriptor);
         }
         return null;
     }
@@ -130,20 +131,22 @@ public class MEImageDecoder implements ImageDecoder {
     /**
      * 通过描述符创建CloseableImage对象
      *
-     * @param format     图片格式
      * @param descriptor 描述符对象
      * @return 成功返回CloseableImage对象， 失败返回null
      */
-    private CloseableImage createImageFromDescriptor(
-            MEImageFormats.MEImageFormat format,
-            AbstractDescriptor descriptor) {
+    private CloseableImage createImageFromDescriptor(AbstractDescriptor descriptor) {
         try {
-            final Constructor<? extends AbstractAnimatedImage> constructor = format.getAnimatedImageClass()
+            MEImageFormats.MEImageFormat format = descriptor.format;
+            final Constructor<? extends AnimatedImage> constructor = format.getAnimatedImageClass()
                     .getConstructor(format.getDescriptorClass());
             constructor.setAccessible(true);
-            final AbstractAnimatedImage image = constructor.newInstance(descriptor);
+            int previewFrame = 0;
+            final AnimatedImage image = constructor.newInstance(descriptor);
+            if (image instanceof Previewable) {
+                previewFrame = ((Previewable) image).getPreviewFrame();
+            }
             final AnimatedImageResult result = AnimatedImageResult.newBuilder(image)
-                    .setFrameForPreview(image.getPreviewFrame())
+                    .setFrameForPreview(previewFrame)
                     .build();
             return new CloseableAnimatedImage(result);
         } catch (Exception e) {

@@ -28,6 +28,16 @@ public class SVGADescriptor extends AbstractDescriptor {
     // 动画相关图片文件
     public Map<String, String> images;
 
+    @Override
+    public int getWidth() {
+        return movie.viewBox.width;
+    }
+
+    @Override
+    public int getHeight() {
+        return movie.viewBox.height;
+    }
+
     /**
      * Sprite, 描述一个子动画
      */

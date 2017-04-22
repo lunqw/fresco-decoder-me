@@ -1,11 +1,9 @@
 package com.yy.lqw.fresco.rf;
 
-import android.graphics.Bitmap;
-
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
+import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
-import com.yy.lqw.fresco.base.AbstractAnimatedImage;
-
+import com.yy.lqw.fresco.base.Previewable;
 
 import java.util.Arrays;
 
@@ -13,9 +11,11 @@ import java.util.Arrays;
  * Created by lunqingwen on 2016/11/10.
  */
 
-public class RFImage extends AbstractAnimatedImage {
+public class RFImage implements AnimatedImage, Previewable {
+    private final RFDescriptor mDescriptor;
+
     public RFImage(RFDescriptor descriptor) {
-        super(descriptor);
+        mDescriptor = descriptor;
     }
 
     @Override
@@ -25,29 +25,29 @@ public class RFImage extends AbstractAnimatedImage {
 
     @Override
     public int getWidth() {
-        return ((RFDescriptor) mDescriptor).getWidth();
+        return mDescriptor.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return ((RFDescriptor) mDescriptor).getHeight();
+        return mDescriptor.getHeight();
     }
 
     @Override
     public int getFrameCount() {
-        return ((RFDescriptor) mDescriptor).frames.size();
+        return mDescriptor.frames.size();
     }
 
     @Override
     public int getDuration() {
-        final float duration = 1000.0f / ((RFDescriptor) mDescriptor).fps * getFrameCount();
+        final float duration = 1000.0f / mDescriptor.fps * getFrameCount();
         return (int) duration;
     }
 
     @Override
     public int[] getFrameDurations() {
         int[] durations = new int[getFrameCount()];
-        Arrays.fill(durations, 1000 / ((RFDescriptor) mDescriptor).fps);
+        Arrays.fill(durations, 1000 / mDescriptor.fps);
         return durations;
     }
 
@@ -58,7 +58,7 @@ public class RFImage extends AbstractAnimatedImage {
 
     @Override
     public AnimatedImageFrame getFrame(int frameNumber) {
-        return new RFFrame(frameNumber, ((RFDescriptor) mDescriptor));
+        return new RFFrame(frameNumber, mDescriptor);
     }
 
     @Override
@@ -68,12 +68,7 @@ public class RFImage extends AbstractAnimatedImage {
 
     @Override
     public int getSizeInBytes() {
-        int totalSize = 0;
-        for (Bitmap bitmap : mDescriptor.cache.values()) {
-            // 暂时假设都是ARGB_8888，后面会优化
-            totalSize += (bitmap.getWidth() * bitmap.getHeight() * 4);
-        }
-        return totalSize;
+        return mDescriptor.getSizeInBytes();
     }
 
     @Override
@@ -93,7 +88,7 @@ public class RFImage extends AbstractAnimatedImage {
     public int getPreviewFrame() {
         final String preview = mDescriptor.preview;
         if (preview != null) {
-            return ((RFDescriptor) mDescriptor).frames.indexOf(preview);
+            return mDescriptor.frames.indexOf(preview);
         }
         return 0;
     }

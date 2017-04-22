@@ -73,12 +73,12 @@ class SVGAFrame implements AnimatedImageFrame {
 
     @Override
     public int getWidth() {
-        return mDescriptor.movie.viewBox.width;
+        return mDescriptor.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return mDescriptor.movie.viewBox.height;
+        return mDescriptor.getHeight();
     }
 
     @Override

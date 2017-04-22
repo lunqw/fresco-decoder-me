@@ -7,8 +7,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.decoder.ImageDecoderConfig;
 import com.yy.lqw.fresco.decoder.MEImageDecoder;
-import com.yy.lqw.fresco.decoder.MEImageFormats;
-import com.yy.lqw.fresco.decoder.MEImageChecker;
+import com.yy.lqw.fresco.format.MEImageFormats;
+import com.yy.lqw.fresco.format.MEImageChecker;
 
 /**
  * Created by lunqingwen on 2016/11/24.

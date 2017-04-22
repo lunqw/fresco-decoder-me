@@ -11,28 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 class CacheManager {
-    private static final Map<CacheKey, CacheItem> sCache = new ConcurrentHashMap<>();
+    private static final Map<CacheKey, AbstractDescriptor> sCache = new ConcurrentHashMap<>();
 
-    private CacheManager() {
-
-    }
-
-    static CacheItem get(CacheKey key) {
-        CacheItem item = sCache.get(key);
+    static AbstractDescriptor get(CacheKey key) {
+        AbstractDescriptor item = sCache.get(key);
         return item;
     }
 
-    static void put(CacheKey key, CacheItem item) {
+    static void put(CacheKey key, AbstractDescriptor item) {
         sCache.put(key, item);
-    }
-
-    static class CacheItem {
-        MEImageFormats.MEImageFormat mFormat;
-        AbstractDescriptor mDescriptor;
-
-        public CacheItem(MEImageFormats.MEImageFormat format, AbstractDescriptor descriptor) {
-            mFormat = format;
-            mDescriptor = descriptor;
-        }
     }
 }

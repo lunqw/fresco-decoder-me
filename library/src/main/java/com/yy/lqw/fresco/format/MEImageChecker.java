@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco.decoder;
+package com.yy.lqw.fresco.format;
 
 
 import com.facebook.imageformat.ImageFormat;

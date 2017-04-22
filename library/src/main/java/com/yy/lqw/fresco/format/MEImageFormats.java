@@ -1,7 +1,7 @@
-package com.yy.lqw.fresco.decoder;
+package com.yy.lqw.fresco.format;
 
 import com.facebook.imageformat.ImageFormat;
-import com.yy.lqw.fresco.base.AbstractAnimatedImage;
+import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.yy.lqw.fresco.base.AbstractDescriptor;
 import com.yy.lqw.fresco.rf.RFDescriptor;
 import com.yy.lqw.fresco.rf.RFImage;
@@ -24,14 +24,14 @@ public final class MEImageFormats {
     public static class MEImageFormat extends ImageFormat {
         private String mDescriptorFileName;
         private Class<? extends AbstractDescriptor> mDescriptorClass;
-        private Class<? extends AbstractAnimatedImage> mAnimatedImageClass;
+        private Class<? extends AnimatedImage> mAnimatedImageClass;
 
         public MEImageFormat(
                 String name,
                 String fileExtension,
                 String descriptorFileName,
                 Class<? extends AbstractDescriptor> descriptorClass,
-                Class<? extends AbstractAnimatedImage> animatedImageClass) {
+                Class<? extends AnimatedImage> animatedImageClass) {
             super(name, fileExtension);
             mDescriptorFileName = descriptorFileName;
             mDescriptorClass = descriptorClass;
@@ -46,7 +46,7 @@ public final class MEImageFormats {
             return mDescriptorClass;
         }
 
-        public Class<? extends AbstractAnimatedImage> getAnimatedImageClass() {
+        public Class<? extends AnimatedImage> getAnimatedImageClass() {
             return mAnimatedImageClass;
         }
     }

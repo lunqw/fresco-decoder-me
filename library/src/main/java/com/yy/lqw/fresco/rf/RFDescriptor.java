@@ -18,12 +18,16 @@ public class RFDescriptor extends AbstractDescriptor {
     // frames
     public List<String> frames;
 
+    // preview
+    public String preview;
+
     // width
     private int width = 0;
 
     // height
     private int height = 0;
 
+    @Override
     public int getWidth() {
         if (cache != null) {
             for (Bitmap bitmap : cache.values()) {
@@ -34,6 +38,7 @@ public class RFDescriptor extends AbstractDescriptor {
         return width;
     }
 
+    @Override
     public int getHeight() {
         if (cache != null) {
             for (Bitmap bitmap : cache.values()) {
