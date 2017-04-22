@@ -1,23 +1,18 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.base;
 
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by lunqingwen on 2016/11/10.
  */
 
-abstract class AbstractDescriptor implements Serializable {
+public abstract class AbstractDescriptor implements Serializable {
     // preview
     public String preview;
 
     // 位图缓存
     public transient Map<String, Bitmap> cache;
-
-    public void initialize() {
-        cache = new HashMap<>();
-    }
 }

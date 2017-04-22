@@ -1,9 +1,11 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.rf;
 
 import android.graphics.Bitmap;
 
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
 import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
+
 
 import java.util.Arrays;
 
@@ -11,16 +13,9 @@ import java.util.Arrays;
  * Created by lunqingwen on 2016/11/10.
  */
 
-class RFImage extends AbstractAnimatedImage {
+public class RFImage extends AbstractAnimatedImage {
     public RFImage(RFDescriptor descriptor) {
         super(descriptor);
-        if (descriptor.width == 0 || descriptor.height == 0) {
-            for (Bitmap bitmap : descriptor.cache.values()) {
-                descriptor.width = bitmap.getWidth();
-                descriptor.height = bitmap.getHeight();
-                break;
-            }
-        }
     }
 
     @Override
@@ -30,12 +25,12 @@ class RFImage extends AbstractAnimatedImage {
 
     @Override
     public int getWidth() {
-        return ((RFDescriptor) mDescriptor).width;
+        return ((RFDescriptor) mDescriptor).getWidth();
     }
 
     @Override
     public int getHeight() {
-        return ((RFDescriptor) mDescriptor).height;
+        return ((RFDescriptor) mDescriptor).getHeight();
     }
 
     @Override

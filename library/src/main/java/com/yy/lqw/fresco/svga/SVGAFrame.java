@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.svga;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

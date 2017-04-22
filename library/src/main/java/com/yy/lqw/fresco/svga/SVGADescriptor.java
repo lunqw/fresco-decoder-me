@@ -1,7 +1,9 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.svga;
 
 import android.graphics.Matrix;
 import android.graphics.Path;
+
+import com.yy.lqw.fresco.base.AbstractDescriptor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Map;
  * <p/>
  * SVGA 描述符对象
  */
-class SVGADescriptor extends AbstractDescriptor {
+public class SVGADescriptor extends AbstractDescriptor {
 
     // 文件版本
     public String ver;

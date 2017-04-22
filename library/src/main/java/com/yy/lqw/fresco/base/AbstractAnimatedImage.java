@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.base;
 
 import com.facebook.imagepipeline.animated.base.AnimatedImage;
 
@@ -6,7 +6,7 @@ import com.facebook.imagepipeline.animated.base.AnimatedImage;
  * Created by lunqingwen on 2016/11/24.
  */
 
-abstract class AbstractAnimatedImage implements AnimatedImage {
+public abstract class AbstractAnimatedImage implements AnimatedImage {
     protected AbstractDescriptor mDescriptor;
 
     public AbstractAnimatedImage(AbstractDescriptor descriptor) {

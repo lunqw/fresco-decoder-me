@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.rf;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,7 +10,6 @@ import com.facebook.imagepipeline.animated.base.AnimatedImageFrame;
  */
 
 class RFFrame implements AnimatedImageFrame {
-    private static final Class<?> TAG = MEImageDecoder.class;
     private final int mFrameNumber;
     private final RFDescriptor mDescriptor;
     private final Canvas mCanvas = new Canvas();
@@ -27,13 +26,10 @@ class RFFrame implements AnimatedImageFrame {
 
     @Override
     public void renderFrame(int width, int height, Bitmap bitmap) {
-//        final long begin = System.currentTimeMillis();
         mCanvas.setBitmap(bitmap);
         final String key = mDescriptor.frames.get(mFrameNumber);
         final Bitmap bmp = mDescriptor.cache.get(key);
         mCanvas.drawBitmap(bmp, 0, 0, null);
-//        final long end = System.currentTimeMillis();
-//        FLog.v(TAG, "Render frame, begin: %d, end: %d, diff: %d", begin, end, end - begin);
     }
 
     @Override
@@ -43,12 +39,12 @@ class RFFrame implements AnimatedImageFrame {
 
     @Override
     public int getWidth() {
-        return mDescriptor.width;
+        return mDescriptor.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return mDescriptor.height;
+        return mDescriptor.getHeight();
     }
 
     @Override

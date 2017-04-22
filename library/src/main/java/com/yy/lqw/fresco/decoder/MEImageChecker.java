@@ -1,4 +1,4 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.decoder;
 
 
 import com.facebook.imageformat.ImageFormat;
@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
  * Created by lunqingwen on 2017/4/22.
  */
 
-public class ZipFormatChecker implements ImageFormat.FormatChecker {
+public class MEImageChecker implements ImageFormat.FormatChecker {
     private static final int ZIP_HEADER_LENGTH = 4;
 
     @Override

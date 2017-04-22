@@ -1,15 +1,16 @@
-package com.yy.lqw.fresco;
+package com.yy.lqw.fresco.svga;
 
 import android.graphics.Bitmap;
 
 import com.facebook.imagepipeline.animated.base.AnimatedDrawableFrameInfo;
+import com.yy.lqw.fresco.base.AbstractAnimatedImage;
 
 import java.util.Arrays;
 
 /**
  * Created by lunqingwen on 2016/8/31.
  */
-class SVGAImage extends AbstractAnimatedImage {
+public class SVGAImage extends AbstractAnimatedImage {
     public SVGAImage(SVGADescriptor descriptor) {
         super(descriptor);
     }
