@@ -8,9 +8,7 @@ import com.facebook.common.logging.FLog;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
-import com.facebook.imagepipeline.cache.MemoryCache;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
-import com.facebook.imagepipeline.core.ImagePipelineFactory;
 import com.facebook.imagepipeline.decoder.ImageDecoder;
 import com.facebook.imagepipeline.image.CloseableAnimatedImage;
 import com.facebook.imagepipeline.image.CloseableImage;
@@ -19,6 +17,7 @@ import com.facebook.imagepipeline.image.QualityInfo;
 import com.google.gson.Gson;
 import com.yy.lqw.fresco.base.AbstractDescriptor;
 import com.yy.lqw.fresco.base.Previewable;
+import com.yy.lqw.fresco.cache.CacheManager;
 import com.yy.lqw.fresco.format.MEImageFormats;
 
 import java.io.IOException;
@@ -46,8 +45,6 @@ public class MEImageDecoder implements ImageDecoder {
 
     private final Gson sGson = new Gson();
 
-    private MemoryCache<CacheKey, CloseableImage> mMemoryCache;
-
     @Override
     public CloseableImage decode(
             EncodedImage encodedImage,
@@ -58,14 +55,7 @@ public class MEImageDecoder implements ImageDecoder {
         AbstractDescriptor descriptor = null;
         final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
         if (cacheKey != null) {
-            if (mMemoryCache == null) {
-                mMemoryCache = ImagePipelineFactory.getInstance().getBitmapMemoryCache();
-            }
-
-            final CloseableReference<CloseableImage> ref = mMemoryCache.get(cacheKey);
-            if (ref != null && ref.isValid()) {
-                descriptor = (AbstractDescriptor) ref.get();
-            }
+            descriptor = CacheManager.get(cacheKey);
         }
         final long beginMillis = System.currentTimeMillis();
         FLog.d(TAG, "Decode image begin");
@@ -119,9 +109,7 @@ public class MEImageDecoder implements ImageDecoder {
                             descriptor.format = format;
                             final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
                             if (cacheKey != null) {
-                                final CloseableReference<CloseableImage> ref =
-                                        CloseableReference.of((CloseableImage) descriptor);
-                                mMemoryCache.cache(cacheKey, ref);
+                                CacheManager.cache(cacheKey, descriptor);
                             }
                         }
                         continue;
