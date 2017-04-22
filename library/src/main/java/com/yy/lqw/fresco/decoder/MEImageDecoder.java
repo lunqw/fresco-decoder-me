@@ -5,9 +5,12 @@ import android.graphics.BitmapFactory;
 
 import com.facebook.cache.common.CacheKey;
 import com.facebook.common.logging.FLog;
+import com.facebook.common.references.CloseableReference;
 import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
+import com.facebook.imagepipeline.cache.MemoryCache;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
 import com.facebook.imagepipeline.decoder.ImageDecoder;
 import com.facebook.imagepipeline.image.CloseableAnimatedImage;
 import com.facebook.imagepipeline.image.CloseableImage;
@@ -43,6 +46,8 @@ public class MEImageDecoder implements ImageDecoder {
 
     private final Gson sGson = new Gson();
 
+    private MemoryCache<CacheKey, CloseableImage> mMemoryCache;
+
     @Override
     public CloseableImage decode(
             EncodedImage encodedImage,
@@ -53,7 +58,14 @@ public class MEImageDecoder implements ImageDecoder {
         AbstractDescriptor descriptor = null;
         final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
         if (cacheKey != null) {
-            descriptor = CacheManager.get(cacheKey);
+            if (mMemoryCache == null) {
+                mMemoryCache = ImagePipelineFactory.getInstance().getBitmapMemoryCache();
+            }
+
+            final CloseableReference<CloseableImage> ref = mMemoryCache.get(cacheKey);
+            if (ref != null && ref.isValid()) {
+                descriptor = (AbstractDescriptor) ref.get();
+            }
         }
         final long beginMillis = System.currentTimeMillis();
         FLog.d(TAG, "Decode image begin");
@@ -107,7 +119,9 @@ public class MEImageDecoder implements ImageDecoder {
                             descriptor.format = format;
                             final CacheKey cacheKey = encodedImage.getEncodedCacheKey();
                             if (cacheKey != null) {
-                                CacheManager.put(cacheKey, descriptor);
+                                final CloseableReference<CloseableImage> ref =
+                                        CloseableReference.of((CloseableImage) descriptor);
+                                mMemoryCache.cache(cacheKey, ref);
                             }
                         }
                         continue;
