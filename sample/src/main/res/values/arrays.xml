@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="input_entries_str">
+        <item>https://mepicture.bs2dl-ssl.huanjuyun.com/emoji_test_1492689878939original_380413915.svga</item>
+        <item>https://mepicture.bs2dl-ssl.huanjuyun.com/emoji_test_1492689929337original_146864441.svga</item>
+        <item>https://mepicture.bs2dl-ssl.huanjuyun.com/emoji_test_1492689984230original_1983329154.svga</item>
+        <item>https://mepicture.bs2dl-ssl.huanjuyun.com/emoji_test_1492690036266original_1895580472.svga</item>
+        <item>https://mepicture.bs2dl-ssl.huanjuyun.com/emoji_test_1492690090128original_1901758970.svga</item>
+        <item>http://s1.yy.com/guild/ttime/svga/210011.svga</item>
+        <item>http://s1.yy.com/guild/ttime/svga/210011_1.svga</item>
+        <item>http://s1.yy.com/guild/ttime/webp/210011.webp</item>
+        <item>http://s1.yy.com/guild/ttime/svga/210020.svga</item>
+        <item>http://s1.yy.com/guild/ttime/webp/210020.webp?v=1</item>
+        <item>http://s1.yy.com/guild/ttime/svga/210046.svga</item>
+        <item>http://s1.yy.com/guild/ttime/webp/210046.webp</item>
+        <item>http://s1.yy.com/guild/ttime/svga/210033.svga</item>
+        <item>http://s1.yy.com/guild/ttime/webp/210033.webp</item>
+        <item>http://s1.yy.com/guild/ttime/webp/210055.webp</item>
+    </string-array>
+
+    <array name="input_entries_res">
+        <item>@raw/laugh</item>
+        <item>@raw/posche</item>
+        <item>@raw/star</item>
+        <item>@raw/wave</item>
+        <item>@raw/newbie</item>
+    </array>
+</resources>

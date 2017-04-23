@@ -22,11 +22,13 @@ public class CacheManager {
             sMemoryCache = ImagePipelineFactory.getInstance().getBitmapMemoryCache();
         }
 
+        AbstractDescriptor descriptor = null;
         final CloseableReference<CloseableImage> ref = sMemoryCache.get(cacheKey);
         if (ref != null && ref.isValid()) {
-            return (AbstractDescriptor) ref.get();
+            descriptor = (AbstractDescriptor) ref.get();
         }
-        return null;
+        CloseableReference.closeSafely(ref);
+        return descriptor;
     }
 
     public static void cache(CacheKey cacheKey, AbstractDescriptor descriptor) {
@@ -35,6 +37,7 @@ public class CacheManager {
 
         final CloseableReference<CloseableImage> ref =
                 CloseableReference.of((CloseableImage) descriptor);
-        sMemoryCache.cache(cacheKey, ref);
+        CloseableReference.closeSafely(sMemoryCache.cache(cacheKey, ref));
+        CloseableReference.closeSafely(ref);
     }
 }
