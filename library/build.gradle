@@ -32,6 +32,5 @@ dependencies {
     compile deps.fresco_animated_webp
     compile deps.fresco_webpsupport
     compile deps.gson
-    compile deps.fst
     provided deps.jsr305
 }
