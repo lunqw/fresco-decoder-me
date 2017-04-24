@@ -2,6 +2,7 @@ package com.yy.lqw.fresco.base;
 
 import android.graphics.Bitmap;
 
+import com.facebook.common.internal.Preconditions;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.yy.lqw.fresco.format.MEImageFormats;
 
@@ -22,16 +23,43 @@ public abstract class AbstractDescriptor extends CloseableImage implements Seria
 
     @Override
     public int getSizeInBytes() {
-        return 0;
+        int size = 0;
+        if (cache != null && !cache.isEmpty()) {
+            for (Bitmap bitmap : cache.values()) {
+                size += (bitmap.getWidth() * bitmap.getHeight() * getBitmapBytesPerPixel(bitmap));
+            }
+        }
+        return size;
     }
 
     @Override
     public void close() {
-
+        cache = null;
+        format = null;
     }
 
     @Override
     public boolean isClosed() {
-        return false;
+        return cache == null;
+    }
+
+    private int getBitmapBytesPerPixel(Bitmap bitmap) {
+        Preconditions.checkNotNull(bitmap);
+        int size = 0;
+        switch (bitmap.getConfig()) {
+            case ARGB_8888:
+                size = 4;
+                break;
+            case ARGB_4444:
+            case RGB_565:
+                size = 2;
+                break;
+            case ALPHA_8:
+                size = 1;
+                break;
+            default:
+                size = 4;
+        }
+        return size;
     }
 }
