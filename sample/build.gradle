@@ -38,5 +38,6 @@ dependencies {
     compile deps.appcompat
     compile deps.recyclerview
     testCompile deps.junit
+    compile deps.fresco_animated_webp
     compile project(':library')
 }
