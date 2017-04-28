@@ -12,8 +12,8 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/v_show"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.RecyclerView
