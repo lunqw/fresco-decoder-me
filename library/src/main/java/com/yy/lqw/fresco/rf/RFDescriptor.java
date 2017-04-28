@@ -29,23 +29,25 @@ public class RFDescriptor extends AbstractDescriptor {
 
     @Override
     public int getWidth() {
-        if (cache != null) {
-            for (Bitmap bitmap : cache.values()) {
-                width = bitmap.getWidth();
-                break;
-            }
+        if (width == 0) {
+            initSize();
         }
         return width;
     }
 
     @Override
     public int getHeight() {
-        if (cache != null) {
-            for (Bitmap bitmap : cache.values()) {
-                height = bitmap.getHeight();
-                break;
-            }
+        if (height == 0) {
+            initSize();
         }
         return height;
+    }
+
+    private void initSize() {
+        if (cache != null && !cache.values().isEmpty()) {
+            final Bitmap bitmap = cache.values().iterator().next();
+            width = bitmap.getWidth();
+            height = bitmap.getHeight();
+        }
     }
 }

@@ -111,7 +111,7 @@ public class MEImageDecoder implements ImageDecoder {
                                 CacheManager.cache(cacheKey, descriptor);
                             }
                         }
-                        continue;
+                        break;
                     }
                 }
             }
