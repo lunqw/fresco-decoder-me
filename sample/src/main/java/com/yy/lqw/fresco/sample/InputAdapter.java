@@ -44,14 +44,14 @@ public class InputAdapter extends Adapter<InputAdapter.EntryHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final EntryHolder holder, final int position) {
+    public void onBindViewHolder(final EntryHolder holder, int position) {
         ((Button) holder.itemView).setText(String.valueOf(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(holder.itemView,
-                            mItems.get(position), position);
+                    final int pos = holder.getAdapterPosition();
+                    mOnItemClickListener.onItemClick(holder.itemView, mItems.get(pos), pos);
                 }
             }
         });

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
-    private List<MemoryTrimmable> mMemoryTrimmables = new ArrayList<>();
+    private final List<MemoryTrimmable> mMemoryTrimmables = new ArrayList<>();
 
     private final MemoryTrimmableRegistry mFrescoMemoryTrimmableRegistry =
             new MemoryTrimmableRegistry() {

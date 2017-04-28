@@ -22,9 +22,9 @@ public final class MEImageFormats {
             "rf.spec", RFDescriptor.class, RFImage.class);
 
     public static class MEImageFormat extends ImageFormat {
-        private String mDescriptorFileName;
-        private Class<? extends AbstractDescriptor> mDescriptorClass;
-        private Class<? extends AnimatedImage> mAnimatedImageClass;
+        final private String mDescriptorFileName;
+        final private Class<? extends AbstractDescriptor> mDescriptorClass;
+        final private Class<? extends AnimatedImage> mAnimatedImageClass;
 
         public MEImageFormat(
                 String name,

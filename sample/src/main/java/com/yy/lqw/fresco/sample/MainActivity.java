@@ -12,7 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 public class MainActivity extends AppCompatActivity {
     private SimpleDraweeView mShowView;
-    private RecyclerView mInputView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +22,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         mShowView = (SimpleDraweeView) findViewById(R.id.v_show);
-        mInputView = (RecyclerView) findViewById(R.id.rv_input);
+        final RecyclerView inputView = (RecyclerView) findViewById(R.id.rv_input);
         InputAdapter adapter = new InputAdapter();
         adapter.setOnItemClickListener(new InputAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, String item, int position) {
-                playAnimation(item, true);
+                playAnimation(item);
             }
         });
-        mInputView.setAdapter(adapter);
-        mInputView.setLayoutManager(new GridLayoutManager(this, 5));
+        inputView.setAdapter(adapter);
+        inputView.setLayoutManager(new GridLayoutManager(this, 5));
     }
 
-    void playAnimation(String uriString, boolean autoPlay) {
+    private void playAnimation(String uriString) {
         DraweeController c = Fresco.newDraweeControllerBuilder()
                 .setUri(uriString)
-                .setAutoPlayAnimations(autoPlay)
+                .setAutoPlayAnimations(true)
                 .build();
         mShowView.setController(c);
     }

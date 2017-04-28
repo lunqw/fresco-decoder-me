@@ -45,7 +45,7 @@ public abstract class AbstractDescriptor extends CloseableImage implements Seria
 
     private int getBitmapBytesPerPixel(Bitmap bitmap) {
         Preconditions.checkNotNull(bitmap);
-        int size = 0;
+        int size;
         switch (bitmap.getConfig()) {
             case ARGB_8888:
                 size = 4;

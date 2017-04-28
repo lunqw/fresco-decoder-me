@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 
 import com.facebook.cache.common.CacheKey;
 import com.facebook.common.logging.FLog;
-import com.facebook.common.references.CloseableReference;
 import com.facebook.imagepipeline.animated.base.AnimatedImage;
 import com.facebook.imagepipeline.animated.base.AnimatedImageResult;
 import com.facebook.imagepipeline.common.ImageDecodeOptions;
@@ -122,6 +121,7 @@ public class MEImageDecoder implements ImageDecoder {
             try {
                 zin.close();
             } catch (IOException e) {
+                FLog.e(TAG, "Close stream error", e);
             }
         }
         if (descriptor != null) {
